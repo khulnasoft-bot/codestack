@@ -78,8 +78,30 @@ export function IDE() {
   const [paletteOpen, setPaletteOpen] = useState(false)
   const [paletteQuery, setPaletteQuery] = useState('')
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const openFile = (path: string) => { setActivePath(path); if (!tabs.includes(path)) setTabs((current) => [...current, path]) }
-  const save = (path = activePath) => setDirtyPaths((current) => { const next = new Set(current); next.delete(path); return next })
+  const openFile = async (path: string) => {
+    setActivePath(path)
+    if (!tabs.includes(path)) setTabs((current) => [...current, path])
+    try {
+      const response = await fetch(`/api/workspaces/local/files?path=${encodeURIComponent(path)}`)
+      if (!response.ok) return
+      const file = await response.json() as { path: string; content: string }
+      setContents((current) => ({ ...current, [file.path]: file.content }))
+    } catch {
+      // Keep the editor responsive when the workspace service is unavailable.
+    }
+  }
+  const save = async (path = activePath) => {
+    const content = contents[path]
+    if (content !== undefined) {
+      try {
+        const response = await fetch('/api/workspaces/local/files', { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ path, content }) })
+        if (!response.ok) return
+      } catch {
+        return
+      }
+    }
+    setDirtyPaths((current) => { const next = new Set(current); next.delete(path); return next })
+  }
   const close = (path: string) => { const next = tabs.filter((tab) => tab !== path); setTabs(next); if (path === activePath && next.length) setActivePath(next[next.length - 1]) }
   useEffect(() => { const handler = (event: KeyboardEvent) => { const mod = event.metaKey || event.ctrlKey; if (mod && event.key.toLowerCase() === 'p') { event.preventDefault(); setPaletteOpen(true) } else if (mod && event.shiftKey && event.key.toLowerCase() === 'p') { event.preventDefault(); setPaletteOpen(true) } else if (mod && event.key.toLowerCase() === 's') { event.preventDefault(); save() } else if (mod && event.key.toLowerCase() === 'b') { event.preventDefault(); setView((current) => current === 'explorer' ? 'search' : 'explorer') } else if (mod && event.key.toLowerCase() === 'j') { event.preventDefault(); setTerminalOpen((current) => !current) } else if (event.key === 'Escape') setPaletteOpen(false) }; window.addEventListener('keydown', handler); return () => window.removeEventListener('keydown', handler) })
   const commands = useMemo(() => ['Open File', 'Save', 'Toggle Terminal', 'Toggle Sidebar', 'Toggle Theme', 'Open Development Guides'], [])
