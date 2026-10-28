@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Gitpod Ports View — Preview</title>
+	<link rel="stylesheet" href="./codicon.css" />
+	<link rel="stylesheet" href="./portsview.css" />
+	<link rel="stylesheet" href="./preview.css" />
+	<script>
+		const ports = [
+			{
+				info: {
+					label: 'web: 3000',
+					tooltip: 'web - Next.js development server',
+					description: 'open (public)',
+					iconStatus: 'Served',
+					contextValue: 'https-public-exposed-served-port',
+					localUrl: 'http://localhost:3000'
+				},
+				status: {
+					localPort: 3000,
+					served: true,
+					exposed: {
+						visibility: 1,
+						protocol: 1,
+						url: 'https://3000-workspace.gitpod.cloud',
+						onExposed: 0
+					},
+					autoExposure: 1,
+					description: 'Next.js development server',
+					name: 'web'
+				}
+			},
+			{
+				info: {
+					label: 'vite: 5173',
+					tooltip: 'vite - Vite dev server',
+					description: 'open on localhost',
+					iconStatus: 'Served',
+					contextValue: 'host-tunneled-served-port',
+					localUrl: 'http://localhost:5173'
+				},
+				status: {
+					localPort: 5173,
+					served: true,
+					autoExposure: 1,
+					tunneled: {
+						targetPort: 5173,
+						visibility: 1,
+						clientsMap: []
+					},
+					remotePort: 5173,
+					description: 'Vite dev server',
+					name: 'vite'
+				}
+			},
+			{
+				info: {
+					label: 'api: 8080',
+					tooltip: 'api - Express API',
+					description: 'open (private)',
+					iconStatus: 'Served',
+					contextValue: 'private-exposed-served-port',
+					localUrl: 'http://localhost:8080'
+				},
+				status: {
+					localPort: 8080,
+					served: true,
+					exposed: {
+						visibility: 0,
+						protocol: 0,
+						url: 'http://8080-workspace.gitpod.cloud',
+						onExposed: 0
+					},
+					autoExposure: 1,
+					description: 'Express API',
+					name: 'api'
+				}
+			},
+			{
+				info: {
+					label: 'docs: 4000',
+					tooltip: 'docs - Documentation site',
+					description: 'detecting...',
+					iconStatus: 'Detecting',
+					contextValue: 'served-port',
+					localUrl: 'http://localhost:4000'
+				},
+				status: {
+					localPort: 4000,
+					served: true,
+					autoExposure: 0,
+					description: 'Documentation site',
+					name: 'docs'
+				}
+			},
+			{
+				info: {
+					label: 'debug: 9229',
+					tooltip: 'debug - Node inspector',
+					description: 'not served',
+					iconStatus: 'NotServed',
+					contextValue: 'port',
+					localUrl: 'http://localhost:9229'
+				},
+				status: {
+					localPort: 9229,
+					served: false,
+					autoExposure: 0,
+					description: 'Node inspector',
+					name: 'debug'
+				}
+			},
+			{
+				info: {
+					label: 'storybook: 6006',
+					tooltip: 'storybook - Storybook',
+					description: 'failed to expose',
+					iconStatus: 'ExposureFailed',
+					contextValue: 'failed-served-port',
+					localUrl: 'http://localhost:6006'
+				},
+				status: {
+					localPort: 6006,
+					served: true,
+					autoExposure: 2,
+					description: 'Storybook',
+					name: 'storybook'
+				}
+			}
+		];
+
+		window.acquireVsCodeApi = function () {
+			return {
+				postMessage(message) {
+					if (message && message.command === 'queryPortData') {
+						queueMicrotask(() => {
+							window.postMessage({ command: 'updatePorts', ports }, '*');
+						});
+						return;
+					}
+					const port = message && message.port;
+					const name = port ? (port.status.name || port.status.localPort) : '';
+					const line = document.getElementById('preview-last-command');
+					if (line) {
+						line.textContent = 'command: ' + message.command + (name ? ' → ' + name : '');
+					}
+					console.log('[portsview preview]', message.command, port);
+				},
+				getState() {
+					return {};
+				},
+				setState() {}
+			};
+		};
+	</script>
+</head>
+<body>
+	<aside id="preview-badge">
+		<strong>Gitpod Ports View</strong>
+		<span>static preview · mock data</span>
+		<code id="preview-last-command">click an action to see its command</code>
+	</aside>
+	<script src="./portsview.js"></script>
+</body>
+</html>

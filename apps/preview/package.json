@@ -1,0 +1,24 @@
+{
+  "name": "@gitpod/portsview-preview",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Static preview of the Gitpod Ports webview",
+  "scripts": {
+    "build": "node esbuild.js",
+    "dev": "node esbuild.js --watch",
+    "serve": "sirv public --no-clear"
+  },
+  "dependencies": {
+    "@vscode/webview-ui-toolkit": "^1.0.0"
+  },
+  "devDependencies": {
+    "@vscode/codicons": "^0.0.31",
+    "esbuild": "^0.17.11",
+    "esbuild-plugin-alias-path": "^2.0.2",
+    "esbuild-svelte": "^0.7.3",
+    "sirv-cli": "^2.0.0",
+    "svelte": "^3.0.0",
+    "svelte-preprocess": "^5.0.1"
+  }
+}

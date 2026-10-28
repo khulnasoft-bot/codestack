@@ -1,23 +1,20 @@
 image: gitpod/workspace-node
 tasks:
   - init: |
-      yarn install --ignore-scripts
+      yarn install --frozen-lockfile
     name: Compile gitpod-shared
     command: |
-      cd gitpod-shared
-      yarn compile
+      yarn workspace gitpod-shared compile
       gp sync-done shared
-      yarn watch
+      yarn workspace gitpod-shared watch
   - name: Compile gitpod-web
     command: |
-      cd gitpod-web
       gp sync-await shared
-      yarn watch
+      yarn workspace gitpod-web watch
   - name: Compile gitpod-remote
     command: |
-      cd gitpod-remote
       gp sync-await shared
-      yarn watch
+      yarn workspace gitpod-remote-ssh watch
 
 vscode:
   extensions:

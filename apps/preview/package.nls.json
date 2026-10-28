@@ -1,0 +1,12 @@
+{
+	"openBrowser": "Open Browser",
+	"openPreview": "Open Preview",
+	"makePrivate": "Make Private",
+	"makePublic": "Make Public",
+	"makeHTTPS": "Use HTTPS Protocol",
+	"makeHTTP": "Use HTTP Protocol",
+	"tunnelNetwork": "Tunnel on all interfaces",
+	"tunnelHost": "Tunnel on localhost",
+	"retryAutoExpose": "Retry to expose",
+	"urlCopy": "Copy URL"
+}

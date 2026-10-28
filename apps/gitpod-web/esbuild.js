@@ -11,8 +11,8 @@ const isWatch = args.indexOf('--watch') >= 0;
 async function build() {
     esbuild.build({
         entryPoints: {
-            portsview: path.join(__dirname, '../gitpod-shared/portsview/src/main.ts'),
-            codicon: path.join(__dirname, 'node_modules', '@vscode', 'codicons', 'dist', 'codicon.css'),
+            portsview: path.join(__dirname, '../../packages/gitpod-shared/portsview/src/main.ts'),
+            codicon: require.resolve('@vscode/codicons/dist/codicon.css'),
         },
         mainFields: ["svelte", "browser", "module", "main"],
         bundle: true,
@@ -42,7 +42,7 @@ build().catch((e) => {
 });
 
 if (isWatch) {
-    const srcDir = path.join(__dirname, '../gitpod-shared/portsview')
+    const srcDir = path.join(__dirname, '../../packages/gitpod-shared/portsview')
     const watcher = require('@parcel/watcher');
     watcher.subscribe(srcDir, () => {
         return build();

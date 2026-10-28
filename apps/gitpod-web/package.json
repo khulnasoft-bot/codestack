@@ -597,7 +597,7 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
-    "gitpod-shared": "link:./../gitpod-shared",
+    "gitpod-shared": "0.0.1",
     "js-yaml": "^4.1.0",
     "node-fetch": "2.6.7",
     "uuid": "8.1.0",

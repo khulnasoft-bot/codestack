@@ -385,7 +385,7 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
-    "gitpod-shared": "link:./../gitpod-shared",
+    "gitpod-shared": "0.0.1",
     "jsonc-parser": "^3.2.0",
     "vscode-nls": "^5.0.0"
   }
