@@ -1,0 +1,9 @@
+.gitignore
+node_modules/
+src/**
+vscode.d.ts
+vscode.proposed.*.d.ts
+webpack.config.js
+rollup.config.js
+tsconfig.json
+yarn.lock

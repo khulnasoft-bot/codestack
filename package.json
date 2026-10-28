@@ -1,35 +1,21 @@
 {
-  "name": "my-project",
-  "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@12.3.4",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
+  "name": "vscode-extensions",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "Dependencies shared by all extensions",
   "dependencies": {
-    "@base-ui/react": "^1.5.0",
-    "@monaco-editor/react": "^4.7.0",
-    "@vercel/analytics": "1.6.1",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^1.16.0",
-    "next": "16.4.3",
-    "react": "^19",
-    "react-dom": "^19",
-    "react-resizable-panels": "^4.15.0",
-    "shadcn": "^4.11.0",
-    "tailwind-merge": "^3.3.1",
-    "tw-animate-css": "^1.4.0"
+    "glob": "^8.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^24",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "postcss": "^8.5",
-    "tailwindcss": "^4.3.3",
-    "typescript": "5.7.3"
+    "@vscode/vsce": "^2.22.0",
+    "ovsx": "^0.8.3"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "compile:gitpod-shared": "yarn --cwd gitpod-shared compile",
+    "build:gitpod-web": "yarn compile:gitpod-shared && yarn --cwd gitpod-web vscode:prepublish",
+    "build:gitpod-remote": "yarn compile:gitpod-shared && yarn --cwd gitpod-remote vscode:prepublish",
+    "hot-reload:gitpod-web": "yarn compile:gitpod-shared && yarn build:gitpod-web && cp -R ./gitpod-web /ide/extensions/gitpod-web"
   }
 }

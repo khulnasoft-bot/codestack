@@ -1,0 +1,50 @@
+{
+  "private": true,
+  "name": "gitpod-shared",
+  "publisher": "gitpod",
+  "version": "0.0.1",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "main": "./out/extension.js",
+  "scripts": {
+    "test": "mocha out/test/**/*.js",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w"
+  },
+  "devDependencies": {
+    "@tsconfig/svelte": "^2.0.0",
+    "@types/js-yaml": "^4.0.5",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@types/node-fetch": "^2.5.12",
+    "@types/uuid": "^8.3.1",
+    "@types/vscode": "1.75.0",
+    "@types/vscode-webview": "^1.57.0",
+    "@types/ws": "^7.2.6",
+    "mocha": "^10.0.0",
+    "svelte": "^3.0.0",
+    "svelte-check": "^2.0.0",
+    "svelte-preprocess": "^4.0.0",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "configcat-node": "^8.0.0",
+    "@gitpod/gitpod-protocol": "0.1.5-main-gha.10852",
+    "@gitpod/supervisor-api-grpc": "0.1.5-main-gha.10852",
+    "@vscode/codicons": "^0.0.31",
+    "@vscode/webview-ui-toolkit": "^1.0.0",
+    "bufferutil": "^4.0.1",
+    "js-yaml": "^4.1.0",
+    "node-fetch": "2.6.7",
+    "reconnecting-websocket": "^4.4.0",
+    "@segment/analytics-node": "^1.0.0-beta.24",
+    "utf-8-validate": "^5.0.2",
+    "uuid": "^8.3.1",
+    "vscode-nls": "^5.0.0",
+    "vscode-ws-jsonrpc": "^0.2.0",
+    "ws": "^7.4.6",
+    "yaml": "^1.10.0"
+  }
+}
